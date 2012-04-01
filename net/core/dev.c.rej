@@ -1,0 +1,10 @@
+--- net/core/dev.c
++++ net/core/dev.c
+@@ -2614,6 +2614,7 @@
+ {
+ 	__skb_pull(skb, skb_headlen(skb));
+ 	skb_reserve(skb, NET_IP_ALIGN - skb_headroom(skb));
++	skb->vlan_tci = 0;
+ 	skb->dev = napi->dev;
+ 	skb->iif = 0;
+ 

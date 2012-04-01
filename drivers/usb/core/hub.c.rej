@@ -1,0 +1,22 @@
+--- drivers/usb/core/hub.c
++++ drivers/usb/core/hub.c
+@@ -1786,10 +1786,17 @@
+ {
+ 	int err;
+ 
+-	/* Increment the parent's count of unsuspended children */
+-	if (udev->parent)
++	if (udev->parent) {
++		/* Increment the parent's count of unsuspended children */
+ 		usb_autoresume_device(udev->parent);
+ 
++		/* Initialize non-root-hub device wakeup to disabled;
++		 * device (un)configuration controls wakeup capable
++		 * sysfs power/wakeup controls wakeup enabled/disabled
++		 */
++		device_init_wakeup(&udev->dev, 0);
++	}
++
+ 	err = usb_enumerate_device(udev);	/* Read descriptors */
+ 	if (err < 0)
+ 		goto fail;

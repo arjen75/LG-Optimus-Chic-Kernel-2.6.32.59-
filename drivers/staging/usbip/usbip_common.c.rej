@@ -1,0 +1,11 @@
+--- drivers/staging/usbip/usbip_common.c
++++ drivers/staging/usbip/usbip_common.c
+@@ -770,7 +770,7 @@
+ 		be32_to_cpus(&pdu->status);
+ 		be32_to_cpus(&pdu->actual_length);
+ 		be32_to_cpus(&pdu->start_frame);
+-		cpu_to_be32s(&pdu->number_of_packets);
++		be32_to_cpus(&pdu->number_of_packets);
+ 		be32_to_cpus(&pdu->error_count);
+ 	}
+ }

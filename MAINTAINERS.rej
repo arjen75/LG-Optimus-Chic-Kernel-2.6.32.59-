@@ -1,0 +1,11 @@
+--- MAINTAINERS
++++ MAINTAINERS
+@@ -5010,7 +5010,7 @@
+ 
+ STABLE BRANCH
+ M:	Greg Kroah-Hartman <greg@kroah.com>
+-L:	stable@kernel.org
++L:	stable@vger.kernel.org
+ S:	Maintained
+ 
+ STAGING SUBSYSTEM

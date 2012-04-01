@@ -1,0 +1,11 @@
+--- arch/powerpc/platforms/pseries/lpar.c
++++ arch/powerpc/platforms/pseries/lpar.c
+@@ -371,7 +371,7 @@
+ 		unsigned long ptel;
+ 	} ptes[4];
+ 	long lpar_rc;
+-	int i, j;
++	unsigned long i, j;
+ 
+ 	/* Read in batches of 4,
+ 	 * invalidate only valid entries not in the VRMA

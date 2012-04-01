@@ -1,0 +1,11 @@
+--- drivers/net/virtio_net.c
++++ drivers/net/virtio_net.c
+@@ -413,7 +427,7 @@
+ 	vi = container_of(work, struct virtnet_info, refill.work);
+ 	napi_disable(&vi->napi);
+ 	still_empty = !try_fill_recv(vi, GFP_KERNEL);
+-	napi_enable(&vi->napi);
++	virtnet_napi_enable(vi);
+ 
+ 	/* In theory, this can happen: if we don't get any buffers in
+ 	 * we will *never* try to fill again. */

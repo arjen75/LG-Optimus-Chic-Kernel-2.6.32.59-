@@ -1,0 +1,19 @@
+--- mm/percpu.c
++++ mm/percpu.c
+@@ -1702,9 +1704,13 @@
+ 			unit_map[cpu] = unit + i;
+ 			unit_off[cpu] = gi->base_offset + i * ai->unit_size;
+ 
+-			if (pcpu_first_unit_cpu == NR_CPUS)
+-				pcpu_first_unit_cpu = cpu;
+-			pcpu_last_unit_cpu = cpu;
++			/* determine low/high unit_cpu */
++			if (pcpu_low_unit_cpu == NR_CPUS ||
++			    unit_off[cpu] < unit_off[pcpu_low_unit_cpu])
++				pcpu_low_unit_cpu = cpu;
++			if (pcpu_high_unit_cpu == NR_CPUS ||
++			    unit_off[cpu] > unit_off[pcpu_high_unit_cpu])
++				pcpu_high_unit_cpu = cpu;
+ 		}
+ 	}
+ 	pcpu_nr_units = unit;

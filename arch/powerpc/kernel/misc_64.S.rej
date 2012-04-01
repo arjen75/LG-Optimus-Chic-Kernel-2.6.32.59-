@@ -1,0 +1,31 @@
+--- arch/powerpc/kernel/misc_64.S
++++ arch/powerpc/kernel/misc_64.S
+@@ -473,10 +474,6 @@
+ 1:	mflr	r5
+ 	addi	r5,r5,kexec_flag-1b
+ 
+-	li      r4,KEXEC_STATE_REAL_MODE
+-	stb     r4,PACAKEXECSTATE(r13)
+-	SYNC
+-
+ 99:	HMT_LOW
+ #ifdef CONFIG_KEXEC		/* use no memory without kexec */
+ 	lwz	r4,0(r5)
+@@ -501,11 +498,17 @@
+  *
+  * get phys id from paca
+  * switch to real mode
++ * mark the paca as no longer used
+  * join other cpus in kexec_wait(phys_id)
+  */
+ _GLOBAL(kexec_smp_wait)
+ 	lhz	r3,PACAHWCPUID(r13)
+ 	bl	real_mode
++
++	li	r4,KEXEC_STATE_REAL_MODE
++	stb	r4,PACAKEXECSTATE(r13)
++	SYNC
++
+ 	b	.kexec_wait
+ 
+ /*
