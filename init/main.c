@@ -420,7 +420,7 @@ static noinline void __init_refok rest_init(void)
 {
 	int pid;
 
-	rcu_scheduler_starting();
+	//rcu_scheduler_starting();
 	/*
 	 * We need to spawn init first so that it obtains pid-1, however
 	 * the init task will end up wanting to create kthreads, which, if

@@ -87,6 +87,7 @@ deps_config := \
 	drivers/staging/iio/Kconfig \
 	drivers/staging/sep/Kconfig \
 	drivers/staging/rar/Kconfig \
+	drivers/staging/zram/Kconfig \
 	drivers/staging/vme/devices/Kconfig \
 	drivers/staging/vme/bridges/Kconfig \
 	drivers/staging/vme/Kconfig \
