@@ -1,6 +1,7 @@
 #ifndef IOCONTEXT_H
 #define IOCONTEXT_H
 
+#include <linux/bitmap.h>
 #include <linux/radix-tree.h>
 #include <linux/rcupdate.h>
 
@@ -30,20 +31,24 @@ struct as_io_context {
 	sector_t seek_mean;
 };
 
-struct cfq_queue;
 struct cfq_io_context {
 	void *key;
 	unsigned long dead_key;
 
-	struct cfq_queue *cfqq[2];
+	void *cfqq[2];
 
 	struct io_context *ioc;
 
 	unsigned long last_end_request;
+	sector_t last_request_pos;
 
 	unsigned long ttime_total;
 	unsigned long ttime_samples;
 	unsigned long ttime_mean;
+
+	unsigned int seek_samples;
+	u64 seek_total;
+	sector_t seek_mean;
 
 	struct list_head queue_list;
 	struct hlist_node cic_list;
@@ -52,6 +57,16 @@ struct cfq_io_context {
 	void (*exit)(struct io_context *); /* called on task exit */
 
 	struct rcu_head rcu_head;
+};
+
+/*
+ * Indexes into the ioprio_changed bitmap.  A bit set indicates that
+ * the corresponding I/O scheduler needs to see a ioprio update.
+ */
+enum {
+	IOC_CFQ_IOPRIO_CHANGED,
+	IOC_BFQ_IOPRIO_CHANGED,
+	IOC_IOPRIO_CHANGED_BITS
 };
 
 /*
@@ -66,7 +81,7 @@ struct io_context {
 	spinlock_t lock;
 
 	unsigned short ioprio;
-	unsigned short ioprio_changed;
+	DECLARE_BITMAP(ioprio_changed, IOC_IOPRIO_CHANGED_BITS);
 
 	/*
 	 * For request batching
@@ -77,6 +92,8 @@ struct io_context {
 	struct as_io_context *aic;
 	struct radix_tree_root radix_root;
 	struct hlist_head cic_list;
+	struct radix_tree_root bfq_radix_root;
+	struct hlist_head bfq_cic_list;
 	void *ioc_data;
 };
 
