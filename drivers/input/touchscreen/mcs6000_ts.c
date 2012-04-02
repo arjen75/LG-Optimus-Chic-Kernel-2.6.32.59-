@@ -74,7 +74,7 @@ void lge_melfas_vdd(UINT8 enable);
 /* shoud be checked, what is the difference, TOUCH_SEARCH and KEY_SERACH, TOUCH_BACK  and KEY_BACK */
 //#define LG_FW_AUDIO_HAPTIC_TOUCH_SOFT_KEY
 
-#define TS_POLLING_TIME 0 /* msec */
+#define TS_POLLING_TIME 1 /* msec */
 
 #define DEBUG_TS 0 /* enable or disable debug message */
 #if DEBUG_TS
