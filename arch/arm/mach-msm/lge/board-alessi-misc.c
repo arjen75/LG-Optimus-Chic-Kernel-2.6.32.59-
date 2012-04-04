@@ -303,7 +303,7 @@ static struct android_vibrator_platform_data alessi_vibrator_data = {
 	.power_set = alessi_vibrator_power_set,
 	.pwm_set = alessi_vibrator_pwn_set,
 	.ic_enable_set = alessi_vibrator_ic_enable_set,
-	.amp_value = 125,
+	.amp_value = 115,
 };
 
 static struct platform_device android_vibrator_device = {
